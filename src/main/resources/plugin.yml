@@ -1,0 +1,26 @@
+name: JalebiSettings
+version: '${project.version}'
+main: com.jalebismp.settings.JalebiSettings
+api-version: '1.21.6'
+description: Settings GUI and follow/friends system for Jalebi SMP
+softdepend: [ProtocolLib]
+commands:
+  settings:
+    description: Open the Jalebi SMP settings menu
+    aliases: [setting]
+  follow:
+    description: Follow a player
+    usage: /follow <player>
+  unfollow:
+    description: Unfollow a player
+    usage: /unfollow <player>
+  friends:
+    description: Open your friends list
+  followers:
+    description: Open your followers list
+  following:
+    description: Open your following list
+permissions:
+  jalebisettings.bypass:
+    description: Ignore other players' privacy / message settings (staff)
+    default: op

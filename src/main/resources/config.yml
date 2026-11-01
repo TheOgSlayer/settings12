@@ -1,0 +1,131 @@
+# Default value for any setting (new players). Use ON / OFF / ANYONE / FRIENDS.
+# Key = setting name in lowercase. Example:
+# defaults:
+#   fast_crystals: ON
+defaults: {}
+
+# Commands (from other plugins) that are checked against the TARGET's privacy settings.
+# The first argument must be the target player's name.
+# Staff (OPs and anyone with the jalebisettings.bypass permission) ignore players' privacy settings
+# for /tpa, /tpahere, /pay and /msg. Set to false to enforce the settings on staff too.
+guard:
+  staff-bypass: true
+
+guarded-commands:
+  private-message: [msg, tell, w, whisper, m, pm, t]
+  teleport-request: [tpa, tpask, call, etpa]
+  teleport-here-request: [tpahere, etpahere, tpaskhere]
+  payment: [pay, epay, shards pay]   # "label subcommand" entries: the player is the word after it
+
+combat:
+  duration-seconds: 15
+
+general:
+  task-interval-ticks: 100   # how often Night Vision / mob / phantom spawning runs
+
+# Mob Spawns setting: when a player turns it OFF, hostile mobs with these spawn reasons are cancelled
+# anywhere inside that player's render distance. (SPAWNER = mob-spawner blocks, add it if you want those blocked too.)
+mob-spawns:
+  blocked-reasons: [NATURAL, REINFORCEMENTS, JOCKEY, MOUNT, PATROL, VILLAGE_INVASION, RAID, TRAP]
+
+phantom-spawns:
+  per-cycle: 1
+  max-nearby: 3
+
+# Commands run (as the player) whenever they change these settings in the menu
+commands:
+  quick-buy: "ah fastbuy"
+  quick-sell: "ah fastsell"
+
+# ---------------------------------------------------------------------------
+# Alerts: chat / action-bar messages from your other plugins are recognised by their text
+# (case-insensitive regex, small-caps are converted to normal letters first) and hidden for players
+# who turned the matching alert OFF in /settings. First matching group wins (pay is checked first).
+# ---------------------------------------------------------------------------
+# Set to true to print every chat/action-bar message (as the filter sees it) to the console,
+# so you can copy the exact text of a plugin's message into the patterns below.
+alerts-debug: false
+
+alerts:
+  pay:
+    - 'received\b.*\bfrom\b'            # Essentials /pay, QuickShop "/shards pay"
+    - 'has been received from'
+  teleport:
+    - 'wants you to teleport to them'    # JalebiTPA incoming /tpahere
+    - 'wants to teleport to you'         # JalebiTPA incoming /tpa
+    - '\[\s*accept\s*\].*\[\s*deny\s*\]' # JalebiTPA accept / deny buttons line
+    - 'accepted your request'
+    - 'denied your request'
+    - 'has requested (to teleport to you|that you teleport to them)'   # EssentialsX
+    - 'to teleport, type /tpaccept'
+  bounty:
+    - 'claimed the .* bounty on'
+    - 'to the bounty on'
+  order:
+    - '\byour order\b'                   # "Your order for X was filled by Y" / filled while you were away
+  auction:
+    - 'returned your unsold item'
+    - 'your (auction|listing|item)s?\b.*\b(sold|expired)'
+  combat:
+    - 'you are in combat'                # Jalebi Combat: "You are in combat! Do not log out for 20s."
+    - 'no longer in combat'              # "You are no longer in combat." / "...You can log out safely."
+  combat-timer:                          # action bar countdown, controlled by the Combat Timer setting
+    - '^\W*combat:\s*\d+'
+  shard:
+    - '\+\s*[\d,]+\s*shards?\b'          # "+10 shards" after a kill
+    - 'awarded .*shards?'                # playtime reward
+
+# ---------------------------------------------------------------------------
+# Server Sound: when a player turns it OFF, sounds whose key matches one of these regexes are not sent to them.
+# Natural game sounds look the same as plugin sounds, so only list the ones your plugins use.
+# Set sounds-debug: true to print the key of every sound sent (find the ones you still hear), then add them here.
+# ---------------------------------------------------------------------------
+sounds-debug: false
+server-sounds:
+  - '^minecraft:ui\.'
+  - '^minecraft:block\.note_block\.'
+  - '^minecraft:entity\.experience_orb\.pickup'
+  - '^minecraft:entity\.player\.levelup'
+  - '^minecraft:entity\.arrow\.hit_player'
+  - '^minecraft:entity\.villager\.(yes|no)'
+  - '^minecraft:entity\.enderman\.teleport'
+  - '^minecraft:block\.beacon\.'
+
+# ---------------------------------------------------------------------------
+# Menu icons shown in front of names in /settings: small item pictures (needs 1.21.9+ client and server).
+# Each value is just an item texture name (oak_sign, bell, diamond_sword ...). Leave "" for no icon.
+# The tag built is  <sprite:ATLAS:PREFIX+name>  e.g. <sprite:items:item/oak_sign>
+# If icons don't show, change atlas / path-prefix below (try atlas "blocks"), then /settings reload-free: just reopen the menu.
+# ---------------------------------------------------------------------------
+icons:
+  atlas: "items"
+  path-prefix: "item/"
+  categories:
+    chat: "oak_sign"
+    notifications: "bell"
+    pvp: "diamond_sword"
+    visuals: "blaze_rod"
+    privacy: "iron_door"
+    general: "paper"
+  settings:
+    public_chat: "writable_book"
+    private_messages: "paper"
+    server_chat_messages: "book"
+    server_hotbar_messages: "name_tag"
+    advancement_messages: "knowledge_book"
+    combat_alerts: "iron_sword"
+    pay_alerts: "gold_ingot"
+    teleport_alerts: "ender_pearl"
+    auction_alerts: "emerald"
+    shard_reward_alerts: "amethyst_shard"
+    fast_crystals: "end_crystal"
+    totem_particles: "totem_of_undying"
+    explosion_particles: "gunpowder"
+    item_worth_lore: "gold_nugget"
+    teleport_confirm_menu: "ender_eye"
+    teleport_requests: "compass"
+    allow_payments: "gold_ingot"
+    auction_quick_buy: "emerald"
+    auction_quick_sell: "gold_ingot"
+    phantom_spawning: "phantom_membrane"
+    night_vision: "golden_carrot"
